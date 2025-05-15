@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Sign-In</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <h1>Login with Google</h1>
+
+  <div id="g_id_onload"
+    data-client_id="724246912035-7nu86bmq2tvfp6hml3svlt2bml0u107a.apps.googleusercontent.com"
+    data-context="signin"
+    data-callback="handleCredentialResponse"
+    data-auto_prompt="false">
+  </div>
+
+  <div class="g_id_signin"
+    data-type="standard"
+    data-shape="rectangular"
+    data-theme="outline"
+    data-text="sign_in_with"
+    data-size="large"
+    data-logo_alignment="left">
+  </div>
+
+  <script>
+    async function handleCredentialResponse(response) {
+      const id_token = response.credential;
+      console.log("Google ID Token:", id_token);
+
+      try {
+        const res = await fetch("http://localhost:8080/api/v1/auth/googleSignIn", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ id_token })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          console.log("Login successful:", data);
+          alert("Bienvenido, " + data.user.name);
+        } else {
+          console.error("Error:", data.message);
+          alert("Error: " + data.message);
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+        alert("Error al conectar con el servidor.");
+      }
+    }
+  </script>
+</body>
+</html>

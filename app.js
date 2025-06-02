@@ -8,6 +8,7 @@ const conexion = require('./db/connection');
 const authRoutes = require('./routes/auth.routes');
 const categoryRoutes = require('./routes/category.routes');
 const productRoutes = require('./routes/product.routes');
+const searchRoutes = require('./routes/search.routes.js');
 require('dotenv').config()
 
 class App {
@@ -29,6 +30,7 @@ class App {
         this.app.use('/api/v1/users', userRoutes);
         this.app.use('/api/v1/categories' , categoryRoutes);
         this.app.use('/api/v1/products', productRoutes);
+        this.app.use('/api/v1/search', searchRoutes);
         this.app.use((req, res) => {
             res.status(404).json({
                 message: 'Ruta no encontrada o metodo diferente'

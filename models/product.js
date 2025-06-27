@@ -9,6 +9,7 @@ const productSchema = new Schema({
         ref: 'CategoryModel'
     },
     available: Boolean,
+    img: String,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserModel'

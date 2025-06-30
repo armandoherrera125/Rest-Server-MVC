@@ -16,8 +16,14 @@ const editProductValidator = [
 const deleteProductValidator = [
     check('id').isMongoId().withMessage('ID no valido'),
 ];
+
+const getProductValidator = [
+    check('id').isMongoId().withMessage('ID no valido'),
+];
+
 module.exports = {
     createProductValidator,
     editProductValidator,
-    deleteProductValidator
+    deleteProductValidator,
+    getProductValidator
 };

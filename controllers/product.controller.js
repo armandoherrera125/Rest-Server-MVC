@@ -15,7 +15,23 @@ class ProductController {
             });
         }
     }
-
+    async getProductByID (req = express.request, res = express.response, next = express.next) {
+        const { id } = req.params;
+        try {
+            const foundProduct = await productModel.findById( id ).populate('user category');
+            if (!foundProduct) return res.status(400).json({
+                message: 'Product not found'
+            });
+            res.status(200).json({
+                product: foundProduct
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Internal server error',
+                error: error.message
+            });
+        }
+    }
     async createProduct(req = express.request, res = express.response, next = express.next) {
         const { name, unitPrice, categoryId, available, userId } = req.body;
         try {

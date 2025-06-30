@@ -52,7 +52,7 @@ class uploadController {
                     const { fileName, uploadPath } = await fileUploader(file);
                     //uploading to Cloudinary
                     const { secure_url, display_name } = await cloudinaryConfiguration.uploader.upload(uploadPath, {
-                        folder: 'uploads'
+                        folder: 'uploads/users'
                     });
                     await userModel.findByIdAndUpdate(id, { img: secure_url });
                     fs.unlinkSync(uploadPath);
@@ -69,7 +69,7 @@ class uploadController {
                     const { fileName, uploadPath } = await fileUploader(file);
                     //uploading to Cloudinary
                     const { secure_url, display_name } = await cloudinaryConfiguration.uploader.upload(uploadPath, {
-                        folder: 'uploads'
+                        folder: 'uploads/products'
                     });
                     await productModel.findByIdAndUpdate(id, { img: secure_url });
                     fs.unlinkSync(uploadPath);
